@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: true
+
+  tasks: 
+    - name: Take down CA server
+      command: docker-compose down
+
+    - name: Copy docker-compose to host
+      copy:
+          src: ../docker-compose-ca.yaml
+          dest: ./docker-compose.yaml
+
+    - name: Run docker-compose
+      command: docker-compose up -d
+
+
+
+
+
+    

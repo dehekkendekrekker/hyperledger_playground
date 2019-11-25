@@ -1,0 +1,25 @@
+---
+- hosts: all
+  become: false
+
+  tasks:
+      - name: Pull fabric CA docker image
+        docker_image:
+            name: hyperledger/fabric-ca:1.4.3
+            source: pull
+
+      - name: Copy configuration to server
+        copy:
+          src: ./config/fabric-ca-server-config.yaml
+          dest: ./config/root_ca/
+
+      - name: Create container
+        docker_container:
+          name: root_ca
+          image: hyperledger/fabric-ca:1.4.3
+          state: started
+          volumes:
+            - ./config/root_ca:/etc/hyperledger/fabric-ca-server/
+
+        tags:
+          - create_container

@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+    root_ca:
+        image: hyperledger/fabric-ca:1.4.3
+        container_name: root_ca
+        command: sh -c "fabric-ca-server start -b admin:notsosecret"
+        volumes:
+              - ./config:/etc/hyperledger/
